@@ -8,6 +8,7 @@ import {environment} from '../../src/environments/environment'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
   title = 'GitHub API';
 
   private serviceUrl: string = environment.GATEWAY_URL;
@@ -15,6 +16,10 @@ export class AppComponent {
   private users: Map<string, string>;
 
   constructor(private apiService: ApiService) {
+  }
+
+  deleteItem(item) {
+    this.users.delete(item.key);
   }
 
   receiveGitHubUsers() {
@@ -26,9 +31,6 @@ export class AppComponent {
           const arr: string[] = object;
           arr.forEach((element) => {
             const obj = this.getJsonObject(element);
-            console.log("-----------------");
-            console.log(obj.login);
-            console.log(obj.avatar_url);
             this.users.set(obj.login, obj.avatar_url);
           }); 
         }
